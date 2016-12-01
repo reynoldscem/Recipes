@@ -42,13 +42,23 @@ def load_dataset(path):
     download_dataset(path)
 
     # training data
-    data = [np.load(os.path.join(path, 'cifar-10-batches-py',
-                                 'data_batch_%d' % (i + 1))) for i in range(5)]
+    batch_paths = [
+        os.path.join(path, 'cifar-10-batches-py', 'data_batch_%d' % (i + 1))
+        for i in range(5)
+    ]
+    data = [
+        np.load(batch_path, encoding='latin1')
+        for batch_path in batch_paths
+    ]
+
     X_train = np.vstack([d['data'] for d in data])
     y_train = np.hstack([np.asarray(d['labels'], np.int8) for d in data])
 
     # test data
-    data = np.load(os.path.join(path, 'cifar-10-batches-py', 'test_batch'))
+    data = np.load(
+        os.path.join(path, 'cifar-10-batches-py', 'test_batch'),
+        encoding='latin1'
+    )
     X_test = data['data']
     y_test = np.asarray(data['labels'], np.int8)
 
