@@ -59,8 +59,8 @@ def generate_in_background(generator, num_cached=10):
     """
     Runs a generator in a background thread, caching up to `num_cached` items.
     """
-    import Queue
-    queue = Queue.Queue(maxsize=num_cached)
+    import queue
+    queue = queue.Queue(maxsize=num_cached)
     sentinel = object()  # guaranteed unique reference
 
     # define producer (putting items into queue)
